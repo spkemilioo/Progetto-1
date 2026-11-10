@@ -1,0 +1,254 @@
+
+# ==================================================
+# PROGETTO PYTHON: GESTIONE DI UNA BIBLIOTECA DIGITALE
+# ==================================================
+
+
+# --------------------------------------------------
+# PARTE 1 - VARIABILI E TIPI DI DATI
+# --------------------------------------------------
+
+titolo = "Il Signore degli Anelli"  # Stringa
+copie = 5                            # Intero
+prezzo_medio = 18.50                 # Float
+disponibile = True                   # Booleano
+
+print("========== VARIABILI ==========")
+
+print("Titolo:", titolo)
+print("Copie disponibili:", copie)
+print("Prezzo medio:", prezzo_medio, "euro")
+print("Disponibile:", disponibile)
+
+
+# --------------------------------------------------
+# PARTE 2 - STRUTTURE DATI
+# --------------------------------------------------
+
+# Lista contenente i titoli dei libri
+libri = [
+    "Il Signore degli Anelli",
+    "1984",
+    "Il piccolo principe",
+    "I Promessi Sposi",
+    "Harry Potter"
+]
+
+# Dizionario che associa ogni libro alle copie disponibili
+copie_libri = {
+    "Il Signore degli Anelli": 5,
+    "1984": 3,
+    "Il piccolo principe": 4,
+    "I Promessi Sposi": 2,
+    "Harry Potter": 6
+}
+
+# Insieme degli utenti registrati
+utenti_registrati = {
+    "Mario Rossi",
+    "Luca Bianchi",
+    "Anna Verdi"
+}
+
+print("\n========== STRUTTURE DATI ==========")
+
+print("\nElenco dei libri:")
+for libro in libri:
+    print("-", libro)
+
+print("\nCopie disponibili:")
+for libro, numero_copie in copie_libri.items():
+    print(libro, ":", numero_copie)
+
+print("\nUtenti registrati:")
+for utente in utenti_registrati:
+    print("-", utente)
+
+
+# --------------------------------------------------
+# PARTE 3 - CLASSI E PROGRAMMAZIONE OOP
+# --------------------------------------------------
+
+# CLASSE LIBRO
+
+class Libro:
+
+    def __init__(self, titolo, autore, anno, copie_disponibili):
+        self.titolo = titolo
+        self.autore = autore
+        self.anno = anno
+        self.copie_disponibili = copie_disponibili
+
+    def info(self):
+        return (
+            f"Titolo: {self.titolo} | "
+            f"Autore: {self.autore} | "
+            f"Anno: {self.anno} | "
+            f"Copie disponibili: {self.copie_disponibili}"
+        )
+
+
+# CLASSE UTENTE
+
+class Utente:
+
+    def __init__(self, nome, eta, id_utente):
+        self.nome = nome
+        self.eta = eta
+        self.id_utente = id_utente
+
+    def scheda(self):
+        print("Nome:", self.nome)
+        print("Età:", self.eta)
+        print("ID utente:", self.id_utente)
+
+
+# CLASSE PRESTITO
+
+class Prestito:
+
+    def __init__(self, utente, libro, giorni):
+        self.utente = utente
+        self.libro = libro
+        self.giorni = giorni
+
+    def dettagli(self):
+        print("\n--- DETTAGLI PRESTITO ---")
+        print("Utente:", self.utente.nome)
+        print("ID utente:", self.utente.id_utente)
+        print("Libro:", self.libro.titolo)
+        print("Autore:", self.libro.autore)
+        print("Anno di pubblicazione:", self.libro.anno)
+        print("Durata del prestito:", self.giorni, "giorni")
+
+
+# --------------------------------------------------
+# CREAZIONE DEGLI OGGETTI LIBRO
+# --------------------------------------------------
+
+libro1 = Libro("Il Signore degli Anelli", "J.R.R. Tolkien", 1954, 5)
+libro2 = Libro("1984", "George Orwell", 1949, 3)
+libro3 = Libro("Il piccolo principe", "Antoine de Saint-Exupéry", 1943, 4)
+libro4 = Libro("I Promessi Sposi", "Alessandro Manzoni", 1827, 2)
+libro5 = Libro("Harry Potter", "J.K. Rowling", 1997, 6)
+
+
+# Creazione degli oggetti Utente
+
+utente1 = Utente("Mario Rossi", 25, 101)
+utente2 = Utente("Luca Bianchi", 30, 102)
+utente3 = Utente("Anna Verdi", 22, 103)
+
+
+# Creazione di una lista contenente tutti gli oggetti Libro
+
+elenco_libri = [libro1, libro2, libro3, libro4, libro5]
+
+
+# Creazione di una lista contenente tutti gli oggetti Utente
+
+elenco_utenti = [utente1, utente2, utente3]
+
+
+# --------------------------------------------------
+# PARTE 4 - FUNZIONALITA'
+# --------------------------------------------------
+
+# Lista che conterrà tutti i prestiti effettuati
+
+prestiti = []
+
+
+# FUNZIONE PER EFFETTUARE UN PRESTITO
+
+def presta_libro(utente, libro, giorni):
+
+    # Verifica che il libro abbia almeno una copia disponibile
+
+    if libro.copie_disponibili >= 1:
+
+        # Diminuisce il numero delle copie disponibili
+
+        libro.copie_disponibili -= 1
+
+        # Aggiorna il dizionario delle copie disponibili
+
+        copie_libri[libro.titolo] = libro.copie_disponibili
+
+        # Crea un nuovo oggetto Prestito
+
+        nuovo_prestito = Prestito(utente, libro, giorni)
+
+        # Inserisce il prestito nella lista
+
+        prestiti.append(nuovo_prestito)
+
+        print("\nPrestito effettuato con successo!")
+        print("Libro:", libro.titolo)
+        print("Utente:", utente.nome)
+
+        return nuovo_prestito
+
+    else:
+
+        # Messaggio di errore se non ci sono copie disponibili
+
+        print("\nERRORE: Non ci sono copie disponibili di", libro.titolo)
+
+        return None
+
+
+# --------------------------------------------------
+# SIMULAZIONE DI ALMENO 3 PRESTITI
+# --------------------------------------------------
+
+print("\n\n========== SIMULAZIONE PRESTITI ==========")
+
+presta_libro(utente1, libro1, 15)
+
+presta_libro(utente2, libro2, 10)
+
+presta_libro(utente3, libro5, 20)
+
+
+# --------------------------------------------------
+# STAMPA DEI DETTAGLI DI OGNI PRESTITO
+# --------------------------------------------------
+
+print("\n\n========== ELENCO DEI PRESTITI ==========")
+
+for prestito in prestiti:
+
+    prestito.dettagli()
+
+
+# --------------------------------------------------
+# STAMPA DELLE COPIE DISPONIBILI AGGIORNATE
+# --------------------------------------------------
+
+print("\n\n========== DISPONIBILITA' DEI LIBRI ==========")
+
+for libro in elenco_libri:
+
+    print(libro.info())
+
+
+# --------------------------------------------------
+# STAMPA DELLE SCHEDE DEGLI UTENTI
+# --------------------------------------------------
+
+print("\n\n========== UTENTI REGISTRATI ==========")
+
+for utente in elenco_utenti:
+
+    print("\n--- SCHEDA UTENTE ---")
+
+    utente.scheda()
+
+
+# --------------------------------------------------
+# FINE DEL PROGRAMMA
+# --------------------------------------------------
+
+print("\n========== FINE DEL PROGRAMMA ==========")
+print("Gestione della biblioteca completata.")
